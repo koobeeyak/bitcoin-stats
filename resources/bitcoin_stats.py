@@ -2,7 +2,7 @@
 from flask_restful import Resource, reqparse
 
 # project
-from models.bitcoin_stat import BitcoinStat
+from process.bitcoin_stats_scraper import BitcoinStatsScraper
 
 
 class BitcoinStats(Resource):
@@ -13,14 +13,9 @@ class BitcoinStats(Resource):
         args = parser.parse_args()
         start_date = args.get('start_date')
         end_date = args.get('end_date')
-        bitcoins = [
-            BitcoinStat('11.12.2018', 23.54, 100.10, 98),
-            BitcoinStat('11.13.2018', 22.84, 99.10, 92),
-        ]
-        # bitcoin_stats = get_bitcoin_stats(start_date, end_date)
-        # bitcoin_stats = BitcoinStatsScraper(start_date, end_date).run()
+        bitcoin_stats = BitcoinStatsScraper('2015-11-01', '2015-12-20').run()
         return {
-            "bitcoinStats": [b.to_json() for b in bitcoins],
             "start_date": start_date,
             "end_date": end_date,
+            "statistics": [b.to_json() for b in bitcoin_stats],
         }

@@ -1,3 +1,6 @@
+aiohttp
 Flask==1.0.2
 Flask-RESTful==0.3.6
+requests==2.20.1
 serpy==0.3.1
+typing==3.6.6
