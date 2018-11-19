@@ -8,12 +8,6 @@ import aiohttp
 from models.bitcoin_stat import BitcoinStat
 from process.utils import get_full_endpoint
 
-ENDPOINTS = [
-    'MKPRU',
-    'TOUTV',
-    'NADDU',
-]
-
 ENDPOINTS_TO_VALUES = {
     'MKPRU': 'btc_price',
     'TOUTV': 'output_volume',
@@ -40,7 +34,7 @@ class BitcoinStatsScraper(object):
 
     def run(self):
         loop = asyncio.get_event_loop()
-        tasks = [asyncio.ensure_future(self.get_bitcoin_stats(endpoint)) for endpoint in ENDPOINTS]
+        tasks = [asyncio.ensure_future(self.get_bitcoin_stats(endpoint)) for endpoint in ENDPOINTS_TO_VALUES.keys()]
         loop.run_until_complete(asyncio.wait(tasks))
         loop.close()
         return self.stats_by_date.values()
